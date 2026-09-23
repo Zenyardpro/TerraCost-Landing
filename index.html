@@ -1,65 +1,776 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#1e3d2f" />
-    <meta name="description" content="TerraCost is landscape estimating software for BOQs, quantity surveying and client proposals. Built for landscape contractors, designers and architects — zone by zone, scope by scope, with GST/VAT per item and PDF/Excel exports." />
-    <meta name="keywords" content="landscape estimating software, landscape BOQ software, bill of quantities landscaping, quantity surveying for landscaping, landscape contractor pricing tool, landscape proposal software" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://terracost.io/" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TerraCost — Landscape BOQ & Proposal Builder</title>
+  <meta name="description" content="Structured estimating and professional proposals for landscape firms in the Gulf and India. Zone-by-zone BOQs with correct GST and VAT.">
+  <meta property="og:title" content="TerraCost — Landscape BOQ & Proposal Builder">
+  <meta property="og:description" content="Zone-by-zone landscape estimating for Gulf and India. Free to start.">
+  <meta property="og:url" content="https://terracost.io">
+  <link rel="canonical" href="https://terracost.io">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="TerraCost" />
-    <meta property="og:title" content="TerraCost | Landscape Estimating & BOQ Software" />
-    <meta property="og:description" content="Landscape estimating software for BOQs, quantity surveying and client-ready proposals — built for landscape contractors, designers and architects." />
-    <meta property="og:url" content="https://terracost.io/" />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1783581263007-41f4e70f49f2?crop=entropy&cs=srgb&fm=jpg&q=85&w=1800" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="TerraCost | Landscape Estimating & BOQ Software" />
-    <meta name="twitter:description" content="Landscape estimating software for BOQs, quantity surveying and client-ready proposals — built for landscape contractors, designers and architects." />
-    <meta name="twitter:image" content="https://images.unsplash.com/photo-1783581263007-41f4e70f49f2?crop=entropy&cs=srgb&fm=jpg&q=85&w=1800" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <title>TerraCost | Landscape Estimating & BOQ Software for Contractors, Designers & Architects</title>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "TerraCost",
-      "url": "https://terracost.io/",
-      "description": "Landscape estimating software for BOQs, quantity surveying and client-ready proposals — built for landscape contractors, designers and architects.",
-      "applicationCategory": "BusinessApplication",
-      "applicationSubCategory": "Construction Estimating Software",
-      "operatingSystem": "Web",
-      "offers": [
-        {
-          "@type": "Offer",
-          "name": "TerraCost India",
-          "url": "https://terra-cost-india.vercel.app/",
-          "priceCurrency": "INR",
-          "category": "SaaS"
-        },
-        {
-          "@type": "Offer",
-          "name": "TerraCost Gulf",
-          "url": "https://terracostgulf.vercel.app/",
-          "priceCurrency": "AED",
-          "category": "SaaS"
-        }
-      ],
-      "audience": {
-        "@type": "Audience",
-        "audienceType": "Landscape Contractors, Landscape Designers, Landscape Architects, Landscape Companies"
-      }
+    :root {
+      --cream:       #F5F1EA;
+      --cream-dk:    #EDE8DF;
+      --forest:      #1A3829;
+      --forest-mid:  #254D38;
+      --forest-lt:   #3B6B50;
+      --gold:        #A87118;
+      --gold-lt:     #C49040;
+      --stone:       #7A6E62;
+      --stone-lt:    #A8A098;
+      --ink:         #2C2820;
+      --white:       #FFFFFF;
+      --border:      #DDD8CF;
+      --shadow:      0 2px 16px rgba(26,56,41,.08);
+      --shadow-lg:   0 8px 40px rgba(26,56,41,.13);
     }
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ──────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(245,241,234,.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px; color: var(--forest);
+      text-decoration: none; letter-spacing: -.3px;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links {
+      display: flex; align-items: center; gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13.5px; font-weight: 500;
+      color: var(--stone); text-decoration: none;
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--forest); }
+    .nav-cta {
+      background: var(--forest); color: var(--cream) !important;
+      padding: 8px 18px; border-radius: 6px;
+      font-weight: 600 !important; font-size: 13px !important;
+      transition: background .15s !important;
+    }
+    .nav-cta:hover { background: var(--forest-mid) !important; }
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+    }
+
+    /* ── HERO ─────────────────────────────────────── */
+    .hero {
+      padding: 88px 5% 80px;
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 18px;
+      background: rgba(168,113,24,.1);
+      padding: 4px 12px; border-radius: 20px;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 4.5vw, 56px);
+      line-height: 1.12; color: var(--forest);
+      margin-bottom: 22px; letter-spacing: -.5px;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: 17px; color: var(--stone);
+      line-height: 1.65; margin-bottom: 36px;
+      max-width: 440px;
+    }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .btn-primary {
+      background: var(--forest); color: var(--cream);
+      padding: 13px 26px; border-radius: 8px;
+      font-size: 14px; font-weight: 600;
+      text-decoration: none; display: inline-block;
+      transition: background .15s, transform .1s;
+      border: none; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--forest-mid); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: var(--forest);
+      padding: 13px 26px; border-radius: 8px;
+      font-size: 14px; font-weight: 600;
+      text-decoration: none; display: inline-block;
+      border: 2px solid var(--forest);
+      transition: background .15s;
+    }
+    .btn-outline:hover { background: var(--forest); color: var(--cream); }
+    .hero-note { font-size: 12px; color: var(--stone-lt); }
+    .hero-note span { margin: 0 6px; opacity: .4; }
+
+    /* Hero visual */
+    .hero-visual {
+      background: var(--forest);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: var(--shadow-lg);
+      position: relative; overflow: hidden;
+    }
+    .hero-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .mock-app {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px; padding: 16px;
+      position: relative; z-index: 1;
+    }
+    .mock-header {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 16px; padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .mock-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .mock-title { font-size: 11px; font-weight: 600; color: rgba(234,230,223,.7); letter-spacing: .4px; }
+    .mock-zone {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 6px; padding: 10px 12px;
+      margin-bottom: 8px;
+    }
+    .mock-zone-name { font-size: 10px; font-weight: 700; color: #C49040; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 8px; }
+    .mock-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+    .mock-row-label { font-size: 10.5px; color: rgba(234,230,223,.65); }
+    .mock-row-val { font-size: 10.5px; font-weight: 600; color: rgba(234,230,223,.9); }
+    .mock-total {
+      margin-top: 12px; padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,.1);
+      display: flex; justify-content: space-between;
+    }
+    .mock-total-label { font-size: 11px; font-weight: 600; color: rgba(234,230,223,.5); }
+    .mock-total-val { font-size: 14px; font-weight: 700; color: #EAE6DF; }
+    .mock-badge {
+      display: inline-block; padding: 2px 8px;
+      background: rgba(168,113,24,.25); color: #C49040;
+      border-radius: 4px; font-size: 9px; font-weight: 700;
+      letter-spacing: .5px; margin-left: 6px;
+    }
+
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: 1fr; padding: 56px 5% 48px; gap: 40px; }
+      .hero-visual { display: none; }
+    }
+
+    /* ── SECTION STYLES ───────────────────────────── */
+    section { padding: 80px 5%; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 3.5vw, 42px);
+      line-height: 1.18; color: var(--forest);
+      margin-bottom: 16px; letter-spacing: -.3px;
+    }
+    .section-sub {
+      font-size: 16px; color: var(--stone);
+      max-width: 560px; line-height: 1.65;
+      margin-bottom: 52px;
+    }
+
+    /* ── PROBLEM STRIP ────────────────────────────── */
+    .problem-strip {
+      background: var(--forest); padding: 56px 5%;
+    }
+    .problem-inner {
+      max-width: 800px; margin: 0 auto; text-align: center;
+    }
+    .problem-quote {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(22px, 3vw, 34px);
+      color: var(--cream); line-height: 1.3;
+      margin-bottom: 20px; font-style: italic;
+    }
+    .problem-attribution {
+      font-size: 13px; color: rgba(234,230,223,.5);
+      font-weight: 500;
+    }
+
+    /* ── HOW IT WORKS ─────────────────────────────── */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .step {
+      background: var(--white); border-radius: 12px;
+      padding: 28px 24px; position: relative;
+      border: 1px solid var(--border);
+      transition: box-shadow .2s, transform .2s;
+    }
+    .step:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--forest); color: var(--cream);
+      font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+    }
+    .step h3 { font-size: 15px; font-weight: 700; color: var(--forest); margin-bottom: 8px; }
+    .step p { font-size: 13.5px; color: var(--stone); line-height: 1.6; }
+    .step-connector {
+      position: absolute; right: -13px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--border); font-size: 18px; z-index: 1;
+    }
+    @media (max-width: 800px) { .steps { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 500px) { .steps { grid-template-columns: 1fr; } .step-connector { display: none; } }
+
+    /* ── EDITIONS ─────────────────────────────────── */
+    .editions { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .edition-card {
+      border-radius: 14px; padding: 36px 32px;
+      position: relative; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .edition-card.gulf { background: var(--forest); }
+    .edition-card.india { background: var(--white); }
+    .edition-flag {
+      font-size: 28px; margin-bottom: 12px; display: block;
+    }
+    .edition-card.gulf h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px; color: var(--cream); margin-bottom: 10px;
+    }
+    .edition-card.india h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px; color: var(--forest); margin-bottom: 10px;
+    }
+    .edition-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .edition-tag {
+      padding: 4px 10px; border-radius: 20px;
+      font-size: 11.5px; font-weight: 600;
+    }
+    .gulf .edition-tag { background: rgba(255,255,255,.12); color: rgba(234,230,223,.8); }
+    .india .edition-tag { background: rgba(26,56,41,.08); color: var(--forest-lt); }
+    .edition-features { list-style: none; margin-bottom: 28px; }
+    .edition-features li {
+      font-size: 13.5px; padding: 5px 0;
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .gulf .edition-features li { color: rgba(234,230,223,.75); }
+    .india .edition-features li { color: var(--stone); }
+    .edition-features li::before { content: '✓'; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .gulf .edition-features li::before { color: #C49040; }
+    .india .edition-features li::before { color: var(--forest); }
+    .edition-cta {
+      display: inline-block; padding: 12px 24px;
+      border-radius: 8px; font-size: 14px; font-weight: 600;
+      text-decoration: none; transition: .15s;
+    }
+    .gulf .edition-cta { background: var(--gold); color: var(--cream); }
+    .gulf .edition-cta:hover { background: var(--gold-lt); }
+    .india .edition-cta { background: var(--forest); color: var(--cream); }
+    .india .edition-cta:hover { background: var(--forest-mid); }
+    @media (max-width: 700px) { .editions { grid-template-columns: 1fr; } }
+
+    /* ── PERSONAS ─────────────────────────────────── */
+    .personas { background: var(--cream-dk); }
+    .persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .persona-card {
+      background: var(--white); border-radius: 12px;
+      padding: 28px 24px; border: 1px solid var(--border);
+    }
+    .persona-icon { font-size: 32px; margin-bottom: 14px; }
+    .persona-card h3 { font-size: 15px; font-weight: 700; color: var(--forest); margin-bottom: 8px; }
+    .persona-card p { font-size: 13.5px; color: var(--stone); line-height: 1.6; }
+    @media (max-width: 700px) { .persona-grid { grid-template-columns: 1fr; } }
+
+    /* ── FEATURE LIST ─────────────────────────────── */
+    .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .feature-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 20px; background: var(--white);
+      border-radius: 10px; border: 1px solid var(--border);
+    }
+    .feature-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: rgba(26,56,41,.08); display: flex;
+      align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .feature-item h4 { font-size: 14px; font-weight: 700; color: var(--forest); margin-bottom: 4px; }
+    .feature-item p { font-size: 13px; color: var(--stone); line-height: 1.55; }
+    @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } }
+
+    /* ── PRICING ──────────────────────────────────── */
+    .pricing-section { background: var(--forest); }
+    .pricing-section .section-title { color: var(--cream); }
+    .pricing-section .section-sub { color: rgba(234,230,223,.6); }
+    .pricing-section .section-eyebrow { color: var(--gold); }
+
+    .pricing-toggle {
+      display: flex; gap: 8px; margin-bottom: 40px;
+    }
+    .pricing-toggle button {
+      padding: 8px 20px; border-radius: 6px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: .15s; border: none;
+    }
+    .pricing-toggle button.active { background: var(--gold); color: var(--cream); }
+    .pricing-toggle button:not(.active) {
+      background: rgba(255,255,255,.1); color: rgba(234,230,223,.6);
+    }
+
+    .pricing-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 760px; }
+    .pricing-card {
+      border-radius: 14px; padding: 32px 28px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+    }
+    .pricing-card.featured {
+      background: var(--cream); border-color: var(--cream);
+    }
+    .pricing-card .plan-name {
+      font-size: 12px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .pricing-card:not(.featured) .plan-name { color: rgba(234,230,223,.5); }
+    .pricing-card.featured .plan-name { color: var(--stone); }
+
+    .pricing-card .price {
+      font-family: 'DM Serif Display', serif;
+      font-size: 42px; line-height: 1; margin-bottom: 4px;
+    }
+    .pricing-card:not(.featured) .price { color: var(--cream); }
+    .pricing-card.featured .price { color: var(--forest); }
+
+    .pricing-card .price-note {
+      font-size: 12px; margin-bottom: 24px;
+    }
+    .pricing-card:not(.featured) .price-note { color: rgba(234,230,223,.45); }
+    .pricing-card.featured .price-note { color: var(--stone-lt); }
+
+    .pricing-features { list-style: none; margin-bottom: 28px; }
+    .pricing-features li {
+      font-size: 13.5px; padding: 5px 0;
+      display: flex; gap: 8px; align-items: flex-start;
+    }
+    .pricing-card:not(.featured) .pricing-features li { color: rgba(234,230,223,.7); }
+    .pricing-card.featured .pricing-features li { color: var(--stone); }
+    .pricing-features li::before { content: '✓'; font-weight: 700; flex-shrink: 0; }
+    .pricing-card:not(.featured) .pricing-features li::before { color: var(--gold); }
+    .pricing-card.featured .pricing-features li::before { color: var(--forest); }
+
+    .pricing-card .plan-cta {
+      width: 100%; padding: 13px;
+      border-radius: 8px; font-size: 14px; font-weight: 600;
+      cursor: pointer; border: none; transition: .15s;
+      text-decoration: none; display: block; text-align: center;
+    }
+    .pricing-card:not(.featured) .plan-cta {
+      background: rgba(255,255,255,.12); color: var(--cream);
+    }
+    .pricing-card:not(.featured) .plan-cta:hover { background: rgba(255,255,255,.2); }
+    .pricing-card.featured .plan-cta {
+      background: var(--forest); color: var(--cream);
+    }
+    .pricing-card.featured .plan-cta:hover { background: var(--forest-mid); }
+
+    .founding-note {
+      margin-top: 28px; max-width: 600px;
+      font-size: 13px; color: rgba(234,230,223,.45); line-height: 1.7;
+    }
+    .founding-note a { color: rgba(234,230,223,.65); }
+    @media (max-width: 600px) { .pricing-cards { grid-template-columns: 1fr; } }
+
+    /* ── FINAL CTA ────────────────────────────────── */
+    .final-cta { text-align: center; padding: 100px 5%; }
+    .final-cta .section-title { max-width: 600px; margin: 0 auto 20px; }
+    .final-cta .section-sub { margin: 0 auto 40px; text-align: center; }
+    .final-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      padding: 40px 5%;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px; color: rgba(234,230,223,.8);
+      text-decoration: none;
+    }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a {
+      font-size: 13px; color: rgba(234,230,223,.4);
+      text-decoration: none; transition: color .15s;
+    }
+    .footer-links a:hover { color: rgba(234,230,223,.8); }
+    .footer-copy {
+      width: 100%; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.06);
+      font-size: 12px; color: rgba(234,230,223,.25); text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">Terra<span>Cost</span></a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#editions">Editions</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="https://gulf.terracost.io" class="nav-cta">Start free</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section style="padding:0; background:var(--cream);">
+    <div class="hero">
+      <div class="hero-content">
+        <span class="hero-eyebrow">Built for landscape professionals</span>
+        <h1>Landscape BOQs.<br><em>Zone by zone.</em><br>Done properly.</h1>
+        <p class="hero-sub">Structured estimating and professional proposals for landscape firms in the Gulf and India. No more flat spreadsheets — every scope, every zone, every line in its place.</p>
+        <div class="hero-ctas">
+          <a href="https://gulf.terracost.io" class="btn-primary">Start free — Gulf</a>
+          <a href="https://app.terracost.in" class="btn-outline">Start free — India</a>
+        </div>
+        <p class="hero-note">Free to build and export PDF<span>·</span>No credit card<span>·</span>Works in your browser</p>
+      </div>
+      <div class="hero-visual">
+        <div class="mock-app">
+          <div class="mock-header">
+            <div class="mock-dot" style="background:#C49040;"></div>
+            <div class="mock-dot" style="background:rgba(255,255,255,.2);"></div>
+            <div class="mock-dot" style="background:rgba(255,255,255,.2);"></div>
+            <span class="mock-title" style="margin-left:8px;">VILLA GARDEN — BANGALORE</span>
+          </div>
+          <div class="mock-zone">
+            <div class="mock-zone-name">Zone 1 — Front Garden</div>
+            <div class="mock-row"><span class="mock-row-label">Granite cobble paving · 45 sqm</span><span class="mock-row-val">₹ 54,000</span></div>
+            <div class="mock-row"><span class="mock-row-label">Podocarpus hedge · 22 nos</span><span class="mock-row-val">₹ 17,600</span></div>
+            <div class="mock-row"><span class="mock-row-label">Drip irrigation system</span><span class="mock-row-val">₹ 28,500</span></div>
+          </div>
+          <div class="mock-zone">
+            <div class="mock-zone-name">Zone 2 — Rear Garden</div>
+            <div class="mock-row"><span class="mock-row-label">Pongamia avenue trees · 4 nos</span><span class="mock-row-val">₹ 36,000</span></div>
+            <div class="mock-row"><span class="mock-row-label">Carpet grass · 180 sqm</span><span class="mock-row-val">₹ 27,000</span></div>
+            <div class="mock-row"><span class="mock-row-label">Lighting — in-ground spots <span class="mock-badge">GST 18%</span></span><span class="mock-row-val">₹ 42,000</span></div>
+          </div>
+          <div class="mock-total">
+            <span class="mock-total-label">BOQ TOTAL + GST</span>
+            <span class="mock-total-val">₹ 2,64,780</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <div class="problem-strip">
+    <div class="problem-inner">
+      <p class="problem-quote">"We lost money on a job because a hidden scope never made it from the site walk into the spreadsheet."</p>
+      <p class="problem-attribution">Flat Excel lists make that easy to do. There is nowhere for a missing line to stand out. TerraCost gives you a structure to estimate against — zones, scopes, items — with correct tax treatment and exports your clients, consultants and vendors can actually use.</p>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="section-inner">
+      <p class="section-eyebrow">How it works</p>
+      <h2 class="section-title">From project to professional BOQ</h2>
+      <p class="section-sub">Four clear steps. No spreadsheet chaos.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Choose project type</h3>
+          <p>Villa, apartment, resort, township — templates with zones pre-loaded. Branded with your rates from day one.</p>
+          <span class="step-connector">→</span>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Structure by zones</h3>
+          <p>Main Garden, Parking, Terrace, Amphitheatre — organise the way you actually work on site.</p>
+          <span class="step-connector">→</span>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Add scopes & items</h3>
+          <p>Plants, hardscape, irrigation, growing media, lighting, labour. Built-in plant picker with species data.</p>
+          <span class="step-connector">→</span>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3>Export & send</h3>
+          <p>Clean multi-sheet Excel BOQ and client-ready PDF proposal — ready to send in minutes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDITIONS -->
+  <section id="editions" style="background:var(--cream-dk);">
+    <div class="section-inner">
+      <p class="section-eyebrow">Two regional editions</p>
+      <h2 class="section-title">Built around how landscape work is priced in each market</h2>
+      <p class="section-sub">Not a generic tool with a currency flag. Each edition has the right tax logic, plant data, and document formats for where you work.</p>
+      <div class="editions">
+        <div class="edition-card gulf">
+          <span class="edition-flag">🌍</span>
+          <h3>TerraCost Gulf</h3>
+          <div class="edition-tags">
+            <span class="edition-tag">UAE & Saudi Arabia</span>
+            <span class="edition-tag">AED · SAR · QAR</span>
+            <span class="edition-tag">VAT 5%</span>
+          </div>
+          <ul class="edition-features">
+            <li>VAT applied correctly per line item</li>
+            <li>Tender-ready documents with retention handling</li>
+            <li>Multi-currency: AED, SAR, QAR, KWD, OMR, BHD, USD</li>
+            <li>Contractor O&P and mobilisation charges built in</li>
+            <li>TSE irrigation, HDPE pipe schedules, Gulf plant library</li>
+          </ul>
+          <a href="https://gulf.terracost.io" class="edition-cta">Open Gulf edition →</a>
+        </div>
+        <div class="edition-card india">
+          <span class="edition-flag">🇮🇳</span>
+          <h3>TerraCost India</h3>
+          <div class="edition-tags">
+            <span class="edition-tag">₹ INR</span>
+            <span class="edition-tag">GST per item</span>
+            <span class="edition-tag">sqft & metric</span>
+          </div>
+          <ul class="edition-features">
+            <li>GST applied at correct rate per line (0%, 5%, 12%, 18%)</li>
+            <li>11 project templates with India-specific zones</li>
+            <li>Species picker built on real Indian plant data</li>
+            <li>Drip, sprinkler, HDPE pipe schedules</li>
+            <li>Sqft (Indian practice) and metric unit toggle</li>
+          </ul>
+          <a href="https://app.terracost.in" class="edition-cta">Open India edition →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section id="who">
+    <div class="section-inner">
+      <p class="section-eyebrow">Who it's for</p>
+      <h2 class="section-title">Built for people who price landscape work</h2>
+      <p class="section-sub">Whether you're estimating for a client, building a tender, or structuring a scope document.</p>
+      <div class="persona-grid">
+        <div class="persona-card">
+          <div class="persona-icon">🏗️</div>
+          <h3>Landscape Contractors</h3>
+          <p>Fast, consistent estimates that protect your margins. Stop losing money to scopes that didn't make it into the spreadsheet.</p>
+        </div>
+        <div class="persona-card">
+          <div class="persona-icon">✏️</div>
+          <h3>Design Studios</h3>
+          <p>Turn detailed designs into professional BOQs and client proposals. Your drawings deserve documentation to match.</p>
+        </div>
+        <div class="persona-card">
+          <div class="persona-icon">📐</div>
+          <h3>Quantity Surveyors</h3>
+          <p>Structured, tax-correct landscape documentation for tenders. Every line item, every zone, every sub-scope in its place.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section style="background:var(--cream-dk);">
+    <div class="section-inner">
+      <p class="section-eyebrow">What you get</p>
+      <h2 class="section-title">Everything a landscape estimate needs</h2>
+      <p class="section-sub">None of the things it doesn't.</p>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">🗂️</div>
+          <div>
+            <h4>Zone & scope structure</h4>
+            <p>Proper hierarchy instead of flat Excel lists. Every scope lives in its zone, every item in its scope.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🧾</div>
+          <div>
+            <h4>Correct tax handling</h4>
+            <p>Gulf VAT and India GST applied at the right rate per line. Plants, labour, lighting — all taxed correctly.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📄</div>
+          <div>
+            <h4>Professional exports</h4>
+            <p>Multi-sheet Excel BOQ, client proposal PDF, vendor-ready Bill of Supply — zone-wise and consolidated.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🌿</div>
+          <div>
+            <h4>Plant library built in</h4>
+            <p>Species picker with light, water and size filters. Actual Indian and Gulf species, not placeholder data.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📐</div>
+          <div>
+            <h4>Reusable templates</h4>
+            <p>11 project types pre-loaded with the zones and scopes you'll actually use. Villa, resort, township and more.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔗</div>
+          <div>
+            <h4>Composite line items</h4>
+            <p>Break complex items into sub-components. Planted pot = plant + pot + soil + installation — all in one line.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="pricing-section">
+    <div class="section-inner">
+      <p class="section-eyebrow">Pricing</p>
+      <h2 class="section-title">Simple pricing</h2>
+      <p class="section-sub">Build every BOQ for free. Pay when you need Excel exports, cloud save and your own branding.</p>
+
+      <div class="pricing-toggle">
+        <button class="active" id="btnGulf" onclick="showPricing('gulf')">Gulf · AED</button>
+        <button id="btnIndia" onclick="showPricing('india')">India · ₹ INR</button>
+      </div>
+
+      <div class="pricing-cards" id="pricingGulf">
+        <div class="pricing-card">
+          <p class="plan-name">Free</p>
+          <p class="price">AED 0</p>
+          <p class="price-note">forever</p>
+          <ul class="pricing-features">
+            <li>Unlimited BOQ calculations</li>
+            <li>All zone & scope structure</li>
+            <li>Plant picker & templates</li>
+            <li>Basic PDF export</li>
+          </ul>
+          <a href="https://gulf.terracost.io" class="plan-cta">Start free</a>
+        </div>
+        <div class="pricing-card featured">
+          <p class="plan-name">Pro ✦ Founding member</p>
+          <p class="price">AED 55<span style="font-size:18px;font-family:'DM Sans',sans-serif;font-weight:400;">/mo</span></p>
+          <p class="price-note">or AED 499/yr — price locked for life</p>
+          <ul class="pricing-features">
+            <li>Everything in Free</li>
+            <li>Excel (.xlsx) export</li>
+            <li>Cloud save & project history</li>
+            <li>Custom header, footer & logo on PDFs</li>
+            <li>Full plant base access</li>
+          </ul>
+          <a href="https://gulf.terracost.io" class="plan-cta">Upgrade to Pro</a>
+        </div>
+      </div>
+
+      <div class="pricing-cards" id="pricingIndia" style="display:none;">
+        <div class="pricing-card">
+          <p class="plan-name">Free</p>
+          <p class="price">₹ 0</p>
+          <p class="price-note">forever</p>
+          <ul class="pricing-features">
+            <li>Unlimited BOQ calculations</li>
+            <li>All zone & scope structure</li>
+            <li>Plant picker & templates</li>
+            <li>Basic PDF export</li>
+          </ul>
+          <a href="https://app.terracost.in" class="plan-cta">Start free</a>
+        </div>
+        <div class="pricing-card featured">
+          <p class="plan-name">Pro ✦ Founding member</p>
+          <p class="price">₹ 785<span style="font-size:18px;font-family:'DM Sans',sans-serif;font-weight:400;">/mo</span></p>
+          <p class="price-note">or ₹ 4,950/yr — price locked for life</p>
+          <ul class="pricing-features">
+            <li>Everything in Free</li>
+            <li>Excel (.xlsx) export</li>
+            <li>Cloud save & project history</li>
+            <li>Custom header, footer & logo on PDFs</li>
+            <li>Full plant base access</li>
+          </ul>
+          <a href="https://app.terracost.in" class="plan-cta">Upgrade to Pro</a>
+        </div>
+      </div>
+
+      <p class="founding-note">Founding-member pricing is open to the first 500 users. Your price stays locked for life, even after list prices apply. Cancel monthly plans anytime. Write to <a href="mailto:sales@terracost.io">sales@terracost.io</a></p>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="section-inner">
+      <p class="section-eyebrow">Get started</p>
+      <h2 class="section-title">Price your next landscape project properly.</h2>
+      <p class="section-sub">Open TerraCost in your browser and build your first BOQ today. Free, no signup required.</p>
+      <div class="final-ctas">
+        <a href="https://gulf.terracost.io" class="btn-primary">Start free — Gulf</a>
+        <a href="https://app.terracost.in" class="btn-outline">Start free — India</a>
+      </div>
+      <p class="hero-note" style="margin-top:20px;">Free to build and export PDF<span style="margin:0 6px;opacity:.4;">·</span>No credit card required</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <a href="/" class="footer-logo">TerraCost</a>
+      <div class="footer-links">
+        <a href="https://gulf.terracost.io">TerraCost Gulf</a>
+        <a href="https://app.terracost.in">TerraCost India</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="https://terraio.vercel.app">Part of TerraOS</a>
+        <a href="mailto:support@terracost.io">Support</a>
+      </div>
+      <p class="footer-copy">© 2026 SOW Business Solutions Pvt Ltd · Bengaluru, India · TerraCost is part of TerraOS · Not affiliated with HashiCorp Terraform</p>
+    </div>
+  </footer>
+
+  <script>
+    function showPricing(region) {
+      document.getElementById('pricingGulf').style.display = region === 'gulf' ? 'grid' : 'none';
+      document.getElementById('pricingIndia').style.display = region === 'india' ? 'grid' : 'none';
+      document.getElementById('btnGulf').className = region === 'gulf' ? 'active' : '';
+      document.getElementById('btnIndia').className = region === 'india' ? 'active' : '';
+    }
+  </script>
+
+</body>
 </html>
